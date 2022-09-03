@@ -1,9 +1,38 @@
+ <script>
+   let inStockFunc = function () {
+     let facetsListItems = document.getElementsByName('filter.v.option.size');
+     let mySet1 = new Set();
+   
+     for (let i of facetsListItems) {
+       if (i.checked) {
+         mySet1.add(i.value);
+       }
+     }
+     let myArr1 = [...mySet1];
+    let productListInstock = document.getElementById('product-grid');
+    let productListInstockItem = productListInstock.querySelectorAll(":scope > li");
+     
+   
+       for (let i of productListInstockItem) {
+         let x = [...i.classList].filter(l => l.length <= 4);
+         for(let v of x) {
+           if(myArr1.includes(v)) {
+             i.remove();
+           }
+         }
+       }
+   }
+   document.addEventListener('click', inStockFunc);
+  
+  
+ </script>
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
 <!-- <style>.remove { display: none !important;}}</style> -->
+
 <link rel="preload" href="{{ 'component-rte.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 <noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
@@ -64,39 +93,7 @@
     {%- endif -%}
   {%- endpaginate -%}
 </div>
- <script>
-   let inStockFunc = function () {
-     let facetsListItems = document.getElementsByName('filter.v.option.size');
-     let mySet1 = new Set();
-   
-     for (let i of facetsListItems) {
-       if (i.checked) {
-         mySet1.add(i.value);
-         // console.log(i.value);
-       }
-     }
-     let myArr1 = [...mySet1];
-     console.log(myArr1, 'fill' )
-    let productListInstock = document.getElementById('product-grid');
-    let productListInstockItem = productListInstock.querySelectorAll(":scope > li");
-     
-   
-       for (let i of productListInstockItem) {
-         let x = [...i.classList].filter(l => l.length <= 4);
-         console.log(x);
-         for(let v of x) {
-           if(myArr1.includes(v)) {
-             i.remove();
-           }
-         }
-       }
-   }
-   // inStockFunc();
-   document.addEventListener('click', inStockFunc);
-  
-  
 
- </script>
 {% schema %}
 {
   "name": "t:sections.main-collection-product-grid.name",
